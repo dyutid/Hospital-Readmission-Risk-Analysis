@@ -1,0 +1,520 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Hospital Readmission Risk Analysis},
+  pdfauthor={DataPulse},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Hospital Readmission Risk Analysis}
+\author{DataPulse}
+\date{2025-12-04}
+
+\begin{document}
+\maketitle
+
+\subsection{R Markdown}\label{r-markdown}
+
+This is an R Markdown document. Markdown is a simple formatting syntax
+for authoring HTML, PDF, and MS Word documents. For more details on
+using R Markdown see \url{http://rmarkdown.rstudio.com}.
+
+When you click the \textbf{Knit} button a document will be generated
+that includes both content as well as the output of any embedded R code
+chunks within the document. You can embed an R code chunk like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyr)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'ggplot2' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(plotly)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'plotly' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'plotly'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:ggplot2':
+## 
+##     last_plot
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:stats':
+## 
+##     filter
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:graphics':
+## 
+##     layout
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(corrplot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'corrplot' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## corrplot 0.95 loaded
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(cluster)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'cluster' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(kableExtra)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'kableExtra' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'kableExtra'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     group_rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(factoextra)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'factoextra' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(shiny)}
+\FunctionTok{library}\NormalTok{(usmap)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'usmap' was built under R version 4.5.2
+\end{verbatim}
+
+\section{===========================}\label{section}
+
+\section{Step 1: Import Data}\label{step-1-import-data}
+
+\section{===========================}\label{section-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_path }\OtherTok{\textless{}{-}} \StringTok{"C:/Users/dyuti/OneDrive/Desktop/readmission\_project/data/FY\_2025\_Hospital\_Readmissions\_Reduction\_Program\_Hospital (1).csv"}
+\NormalTok{hosp\_data }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(data\_path, }\AttributeTok{stringsAsFactors =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{===========================}\label{section-2}
+
+\section{Step 2: Data Cleaning \&
+Transformation}\label{step-2-data-cleaning-transformation}
+
+\section{===========================}\label{section-3}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hosp\_data }\OtherTok{\textless{}{-}}\NormalTok{ hosp\_data }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{mutate}\NormalTok{(}
+\AttributeTok{Measure.Name =} \FunctionTok{trimws}\NormalTok{(Measure.Name),}
+\AttributeTok{State =} \FunctionTok{toupper}\NormalTok{(}\FunctionTok{trimws}\NormalTok{(State)),}
+\AttributeTok{Excess.Readmission.Ratio =} \FunctionTok{as.numeric}\NormalTok{(Excess.Readmission.Ratio),}
+\AttributeTok{Expected.Readmission.Rate =} \FunctionTok{as.numeric}\NormalTok{(Expected.Readmission.Rate),}
+\AttributeTok{Number.of.Discharges =} \FunctionTok{as.numeric}\NormalTok{(Number.of.Discharges),}
+\AttributeTok{Number.of.Readmissions =} \FunctionTok{as.numeric}\NormalTok{(Number.of.Readmissions)}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Excess.Readmission.Ratio) }\SpecialCharTok{\&} \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Number.of.Discharges) }\SpecialCharTok{\&} \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Expected.Readmission.Rate))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: There were 4 warnings in `mutate()`.
+## The first warning was:
+## i In argument: `Excess.Readmission.Ratio =
+##   as.numeric(Excess.Readmission.Ratio)`.
+## Caused by warning:
+## ! NAs introduced by coercion
+## i Run `dplyr::last_dplyr_warnings()` to see the 3 remaining warnings.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(hosp\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                     Facility.Name Facility.ID State       Measure.Name
+## 1 SOUTHEAST HEALTH MEDICAL CENTER       10001    AL  READM-30-AMI-HRRP
+## 2 SOUTHEAST HEALTH MEDICAL CENTER       10001    AL READM-30-CABG-HRRP
+## 3 SOUTHEAST HEALTH MEDICAL CENTER       10001    AL   READM-30-HF-HRRP
+## 4 SOUTHEAST HEALTH MEDICAL CENTER       10001    AL   READM-30-PN-HRRP
+## 5 SOUTHEAST HEALTH MEDICAL CENTER       10001    AL READM-30-COPD-HRRP
+## 6        MARSHALL MEDICAL CENTERS       10005    AL   READM-30-HF-HRRP
+##   Number.of.Discharges Footnote Excess.Readmission.Ratio
+## 1                  296       NA                   0.9483
+## 2                  151       NA                   0.9509
+## 3                  681       NA                   1.0597
+## 4                  490       NA                   0.9715
+## 5                  130       NA                   0.9330
+## 6                  176       NA                   0.9935
+##   Predicted.Readmission.Rate Expected.Readmission.Rate Number.of.Readmissions
+## 1                    13.0146                   13.7235                     36
+## 2                     9.6899                   10.1898                     13
+## 3                    21.5645                   20.3495                    151
+## 4                    16.1137                   16.5863                     77
+## 5                    15.4544                   16.5637                     16
+## 6                    20.1511                   20.2835                     35
+##   Start.Date   End.Date
+## 1 07/01/2020 06/30/2023
+## 2 07/01/2020 06/30/2023
+## 3 07/01/2020 06/30/2023
+## 4 07/01/2020 06/30/2023
+## 5 07/01/2020 06/30/2023
+## 6 07/01/2020 06/30/2023
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(hosp\_data[,}\FunctionTok{c}\NormalTok{(}\StringTok{"Excess.Readmission.Ratio"}\NormalTok{,}\StringTok{"Number.of.Discharges"}\NormalTok{,}\StringTok{"Expected.Readmission.Rate"}\NormalTok{)])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Excess.Readmission.Ratio Number.of.Discharges Expected.Readmission.Rate
+##  Min.   :0.4779           Min.   :  25.0       Min.   : 2.892           
+##  1st Qu.:0.9635           1st Qu.: 120.0       1st Qu.:14.779           
+##  Median :1.0072           Median : 203.0       Median :17.186           
+##  Mean   :1.0092           Mean   : 286.8       Mean   :16.550           
+##  3rd Qu.:1.0527           3rd Qu.: 361.0       3rd Qu.:19.201           
+##  Max.   :1.6430           Max.   :4501.0       Max.   :25.394
+\end{verbatim}
+
+\section{===========================}\label{section-4}
+
+\section{Step 3: Scatter Plot: Excess Readmission Ratio vs Number of
+Discharges}\label{step-3-scatter-plot-excess-readmission-ratio-vs-number-of-discharges}
+
+\section{===========================}\label{section-5}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(hosp\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Number.of.Discharges, }\AttributeTok{y =}\NormalTok{ Excess.Readmission.Ratio)) }\SpecialCharTok{+}
+\FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.6}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{) }\SpecialCharTok{+}
+\FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{+}
+\FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+\FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Number of Discharges"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Excess Readmission Ratio"}\NormalTok{,}
+\AttributeTok{title =} \StringTok{"Excess Readmission Ratio vs Number of Discharges"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\pandocbounded{\includegraphics[keepaspectratio]{Hospital_Readmission_files/figure-latex/unnamed-chunk-4-1.pdf}}
+
+\section{===========================}\label{section-6}
+
+\section{Step 4: State-wise Average Excess Readmission
+Ratio}\label{step-4-state-wise-average-excess-readmission-ratio}
+
+\section{===========================}\label{section-7}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{state\_summary }\OtherTok{\textless{}{-}}\NormalTok{ hosp\_data }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{group\_by}\NormalTok{(State) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{summarise}\NormalTok{(}\AttributeTok{AvgExcessRatio =} \FunctionTok{mean}\NormalTok{(Excess.Readmission.Ratio, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{rename}\NormalTok{(}\AttributeTok{state =}\NormalTok{ State) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(AvgExcessRatio))}
+
+\FunctionTok{ggplot}\NormalTok{(state\_summary, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(state, AvgExcessRatio), }\AttributeTok{y =}\NormalTok{ AvgExcessRatio, }\AttributeTok{fill =}\NormalTok{ AvgExcessRatio)) }\SpecialCharTok{+}
+\FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+\FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+\FunctionTok{scale\_fill\_gradient}\NormalTok{(}\AttributeTok{low =} \StringTok{"white"}\NormalTok{, }\AttributeTok{high =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+\FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+\FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"State"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Average Excess Readmission Ratio"}\NormalTok{,}
+\AttributeTok{title =} \StringTok{"State{-}wise Average Excess Readmission Ratio"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{Hospital_Readmission_files/figure-latex/unnamed-chunk-5-1.pdf}}
+\# =========================== \# Step 5: Top \& Bottom 10 Hospitals \#
+===========================
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{top10 }\OtherTok{\textless{}{-}}\NormalTok{ hosp\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(Excess.Readmission.Ratio)) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{head}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\NormalTok{bottom10 }\OtherTok{\textless{}{-}}\NormalTok{ hosp\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{arrange}\NormalTok{(Excess.Readmission.Ratio) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{head}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+
+\NormalTok{leaderboard }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(}
+\FunctionTok{cbind}\NormalTok{(}\AttributeTok{Rank =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{, }\AttributeTok{Category =} \StringTok{"Top 10"}\NormalTok{, top10[,}\FunctionTok{c}\NormalTok{(}\StringTok{"Facility.Name"}\NormalTok{,}\StringTok{"State"}\NormalTok{,}\StringTok{"Measure.Name"}\NormalTok{,}\StringTok{"Excess.Readmission.Ratio"}\NormalTok{)]),}
+\FunctionTok{cbind}\NormalTok{(}\AttributeTok{Rank =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{, }\AttributeTok{Category =} \StringTok{"Bottom 10"}\NormalTok{, bottom10[,}\FunctionTok{c}\NormalTok{(}\StringTok{"Facility.Name"}\NormalTok{,}\StringTok{"State"}\NormalTok{,}\StringTok{"Measure.Name"}\NormalTok{,}\StringTok{"Excess.Readmission.Ratio"}\NormalTok{)])}
+\NormalTok{)}
+
+\FunctionTok{kable}\NormalTok{(leaderboard, }\AttributeTok{caption =} \StringTok{"Top and Bottom 10 Hospitals by Excess Readmission Ratio"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{full\_width =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[t]{rllllr}
+\caption{\label{tab:unnamed-chunk-6}Top and Bottom 10 Hospitals by Excess Readmission Ratio}\\
+\toprule
+Rank & Category & Facility.Name & State & Measure.Name & Excess.Readmission.Ratio\\
+\midrule
+1 & Top 10 & ARIZONA ORTHOPEDIC AND SURGICAL SPECIALTY HOSPITAL & AZ & READM-30-HIP-KNEE-HRRP & 1.6430\\
+2 & Top 10 & LOUIS A WEISS MEMORIAL HOSPITAL & IL & READM-30-HIP-KNEE-HRRP & 1.5629\\
+3 & Top 10 & HCA FLORIDA OAK HILL HOSPITAL & FL & READM-30-HIP-KNEE-HRRP & 1.5573\\
+4 & Top 10 & OROVILLE HOSPITAL & CA & READM-30-PN-HRRP & 1.4919\\
+5 & Top 10 & MORTON HOSPITAL & MA & READM-30-HIP-KNEE-HRRP & 1.4844\\
+\addlinespace
+6 & Top 10 & ST LUKES HOSPITAL & MO & READM-30-HIP-KNEE-HRRP & 1.4611\\
+7 & Top 10 & STURDY MEMORIAL HOSPITAL & MA & READM-30-HIP-KNEE-HRRP & 1.4138\\
+8 & Top 10 & HOLY FAMILY HOSPITAL & MA & READM-30-HIP-KNEE-HRRP & 1.4127\\
+9 & Top 10 & TRIDENT MEDICAL CENTER & SC & READM-30-HIP-KNEE-HRRP & 1.4003\\
+10 & Top 10 & SHASTA REGIONAL MEDICAL CENTER & CA & READM-30-HIP-KNEE-HRRP & 1.3791\\
+\addlinespace
+1 & Bottom 10 & SAINT JOHN'S HEALTH CENTER & CA & READM-30-HIP-KNEE-HRRP & 0.4779\\
+2 & Bottom 10 & SALINA SURGICAL HOSPITAL & KS & READM-30-HIP-KNEE-HRRP & 0.5758\\
+3 & Bottom 10 & PHYSICIANS CARE SURGICAL HOSPITAL & PA & READM-30-HIP-KNEE-HRRP & 0.5789\\
+4 & Bottom 10 & TEXAS ORTHOPEDIC HOSPITAL & TX & READM-30-HIP-KNEE-HRRP & 0.5796\\
+5 & Bottom 10 & KANSAS SURGERY \& RECOVERY CENTER & KS & READM-30-HIP-KNEE-HRRP & 0.6026\\
+\addlinespace
+6 & Bottom 10 & KANSAS CITY ORTHOPAEDIC INSTITUTE & KS & READM-30-HIP-KNEE-HRRP & 0.6113\\
+7 & Bottom 10 & O.A.S.I.S. HOSPITAL & AZ & READM-30-HIP-KNEE-HRRP & 0.6332\\
+8 & Bottom 10 & ARKANSAS SURGICAL HOSPITAL & AR & READM-30-HIP-KNEE-HRRP & 0.6373\\
+9 & Bottom 10 & STANFORD HEALTH CARE & CA & READM-30-HIP-KNEE-HRRP & 0.6415\\
+10 & Bottom 10 & HOSPITAL FOR SPECIAL SURGERY & NY & READM-30-HIP-KNEE-HRRP & 0.6493\\
+\bottomrule
+\end{longtable}
+
+\section{===========================}\label{section-8}
+
+\section{Step 6: Condition-wise
+Analysis}\label{step-6-condition-wise-analysis}
+
+\section{===========================}\label{section-9}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{condition\_summary }\OtherTok{\textless{}{-}}\NormalTok{ hosp\_data }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{group\_by}\NormalTok{(Measure.Name) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{summarise}\NormalTok{(}
+\AttributeTok{AvgExcessRatio =} \FunctionTok{mean}\NormalTok{(Excess.Readmission.Ratio, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+\AttributeTok{AvgNumberDischarges =} \FunctionTok{mean}\NormalTok{(Number.of.Discharges, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(AvgExcessRatio))}
+
+\FunctionTok{ggplot}\NormalTok{(condition\_summary, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(Measure.Name, AvgExcessRatio), }\AttributeTok{y =}\NormalTok{ AvgExcessRatio, }\AttributeTok{fill =}\NormalTok{ AvgExcessRatio)) }\SpecialCharTok{+}
+\FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+\FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+\FunctionTok{scale\_fill\_gradient}\NormalTok{(}\AttributeTok{low =} \StringTok{"white"}\NormalTok{, }\AttributeTok{high =} \StringTok{"darkred"}\NormalTok{) }\SpecialCharTok{+}
+\FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+\FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Condition"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Average Excess Readmission Ratio"}\NormalTok{,}
+\AttributeTok{title =} \StringTok{"Average Excess Readmission Ratio by Condition"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{Hospital_Readmission_files/figure-latex/unnamed-chunk-7-1.pdf}}
+
+\#US Map
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{pdf}\NormalTok{(}\StringTok{"state\_map.pdf"}\NormalTok{, }\AttributeTok{width=}\DecValTok{6}\NormalTok{, }\AttributeTok{height=}\DecValTok{4}\NormalTok{)}
+\FunctionTok{plot\_usmap}\NormalTok{(}\AttributeTok{data =}\NormalTok{ state\_summary, }\AttributeTok{values =} \StringTok{"AvgExcessRatio"}\NormalTok{) }\SpecialCharTok{+}
+\FunctionTok{scale\_fill\_continuous}\NormalTok{(}\AttributeTok{low =} \StringTok{"white"}\NormalTok{, }\AttributeTok{high =} \StringTok{"red"}\NormalTok{, }\AttributeTok{name =} \StringTok{"Avg Excess Ratio"}\NormalTok{) }\SpecialCharTok{+}
+\FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"right"}\NormalTok{) }\SpecialCharTok{+}
+\FunctionTok{ggtitle}\NormalTok{(}\StringTok{"State{-}wise Average Excess Readmission Ratio"}\NormalTok{)}
+\FunctionTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## pdf 
+##   2
+\end{verbatim}
+
+\end{document}

@@ -1,0 +1,155 @@
+---
+title: "Hospital Readmission Risk Analysis"
+author: "DataPulse"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+echo = TRUE,
+fig.width = 6,
+fig.height = 4,
+fig.retina = 1
+)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(plotly)
+library(corrplot)
+library(cluster)
+library(kableExtra)
+library(factoextra)
+library(shiny)
+library(usmap)
+```
+
+# ===========================
+# Step 1: Import Data
+# ===========================
+
+```{r}
+data_path <- "C:/Users/dyuti/OneDrive/Desktop/readmission_project/data/FY_2025_Hospital_Readmissions_Reduction_Program_Hospital (1).csv"
+hosp_data <- read.csv(data_path, stringsAsFactors = FALSE)
+```
+
+
+# ===========================
+# Step 2: Data Cleaning & Transformation
+# ===========================
+
+```{r}
+hosp_data <- hosp_data %>%
+mutate(
+Measure.Name = trimws(Measure.Name),
+State = toupper(trimws(State)),
+Excess.Readmission.Ratio = as.numeric(Excess.Readmission.Ratio),
+Expected.Readmission.Rate = as.numeric(Expected.Readmission.Rate),
+Number.of.Discharges = as.numeric(Number.of.Discharges),
+Number.of.Readmissions = as.numeric(Number.of.Readmissions)
+) %>%
+filter(!is.na(Excess.Readmission.Ratio) & !is.na(Number.of.Discharges) & !is.na(Expected.Readmission.Rate))
+
+head(hosp_data)
+
+summary(hosp_data[,c("Excess.Readmission.Ratio","Number.of.Discharges","Expected.Readmission.Rate")])
+```
+
+# ===========================
+# Step 3: Scatter Plot: Excess Readmission Ratio vs Number of Discharges
+# ===========================
+
+```{r}
+ggplot(hosp_data, aes(x = Number.of.Discharges, y = Excess.Readmission.Ratio)) +
+geom_point(alpha = 0.6, color = "blue") +
+geom_smooth(method = "lm", color = "red", se = TRUE) +
+theme_minimal() +
+labs(x = "Number of Discharges", y = "Excess Readmission Ratio",
+title = "Excess Readmission Ratio vs Number of Discharges")
+```
+
+# ===========================
+# Step 4: State-wise Average Excess Readmission Ratio
+# ===========================
+
+```{r}
+state_summary <- hosp_data %>%
+group_by(State) %>%
+summarise(AvgExcessRatio = mean(Excess.Readmission.Ratio, na.rm = TRUE)) %>%
+rename(state = State) %>%
+arrange(desc(AvgExcessRatio))
+
+ggplot(state_summary, aes(x = reorder(state, AvgExcessRatio), y = AvgExcessRatio, fill = AvgExcessRatio)) +
+geom_bar(stat = "identity") +
+coord_flip() +
+scale_fill_gradient(low = "white", high = "red") +
+theme_minimal() +
+labs(x = "State", y = "Average Excess Readmission Ratio",
+title = "State-wise Average Excess Readmission Ratio")
+```
+# ===========================
+# Step 5: Top & Bottom 10 Hospitals
+# ===========================
+
+```{r}
+top10 <- hosp_data %>% arrange(desc(Excess.Readmission.Ratio)) %>% head(10)
+bottom10 <- hosp_data %>% arrange(Excess.Readmission.Ratio) %>% head(10)
+
+leaderboard <- rbind(
+cbind(Rank = 1:10, Category = "Top 10", top10[,c("Facility.Name","State","Measure.Name","Excess.Readmission.Ratio")]),
+cbind(Rank = 1:10, Category = "Bottom 10", bottom10[,c("Facility.Name","State","Measure.Name","Excess.Readmission.Ratio")])
+)
+
+kable(leaderboard, caption = "Top and Bottom 10 Hospitals by Excess Readmission Ratio") %>%
+kable_styling(full_width = FALSE)
+```
+# ===========================
+# Step 6: Condition-wise Analysis
+# ===========================
+
+```{r}
+condition_summary <- hosp_data %>%
+group_by(Measure.Name) %>%
+summarise(
+AvgExcessRatio = mean(Excess.Readmission.Ratio, na.rm = TRUE),
+AvgNumberDischarges = mean(Number.of.Discharges, na.rm = TRUE)
+) %>%
+arrange(desc(AvgExcessRatio))
+
+ggplot(condition_summary, aes(x = reorder(Measure.Name, AvgExcessRatio), y = AvgExcessRatio, fill = AvgExcessRatio)) +
+geom_bar(stat = "identity") +
+coord_flip() +
+scale_fill_gradient(low = "white", high = "darkred") +
+theme_minimal() +
+labs(x = "Condition", y = "Average Excess Readmission Ratio",
+title = "Average Excess Readmission Ratio by Condition")
+
+```
+
+#US Map
+
+```{r}
+pdf("state_map.pdf", width=6, height=4)
+plot_usmap(data = state_summary, values = "AvgExcessRatio") +
+scale_fill_continuous(low = "white", high = "red", name = "Avg Excess Ratio") +
+theme(legend.position = "right") +
+ggtitle("State-wise Average Excess Readmission Ratio")
+dev.off()
+
+```
+
+
+
